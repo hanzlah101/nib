@@ -34,9 +34,13 @@ export function MagicLinkForm() {
   const isPending = !!pending
 
   const handleSubmit = form.handleSubmit(async (values) => {
-    alert(values.email)
     setPending("magic-link")
-    const { error } = await authClient.signIn.magicLink({ email: values.email })
+    const searchParams = new URLSearchParams(window.location.search)
+
+    const { error } = await authClient.signIn.magicLink({
+      email: values.email,
+      callbackURL: searchParams.get("redirectTo") ?? "/"
+    })
     setPending(undefined)
     if (error) {
       form.setError("email", {

@@ -1,6 +1,6 @@
 "use client"
 
-import { redirect } from "next/navigation"
+import { redirect, RedirectType, useSearchParams } from "next/navigation"
 
 import { Logo } from "@/components/logo"
 import { type SessionRes, useSession } from "@/stores/use-session"
@@ -19,6 +19,7 @@ export function Onboarding({
 }: {
   initialSession: SessionRes
 }) {
+  const searchParams = useSearchParams()
   const { session } = useSession({ initialData })
 
   if (!session) redirect("/auth")
@@ -55,5 +56,5 @@ export function Onboarding({
     )
   }
 
-  redirect("/")
+  redirect(searchParams.get("afterOnboarding") ?? "/", RedirectType.push)
 }

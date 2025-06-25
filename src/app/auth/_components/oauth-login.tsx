@@ -17,9 +17,12 @@ export function OAuthLogin() {
 
   const handleLogin = async (provider: Provider) => {
     setPending(provider)
+    const searchParams = new URLSearchParams(window.location.search)
+    const callbackURL = searchParams.get("redirectTo") ?? "/"
     const { error } = await authClient.signIn.social({
       provider,
-      newUserCallbackURL: "/onboarding"
+      callbackURL,
+      newUserCallbackURL: `/onboarding?afterOnboarding=${encodeURIComponent(callbackURL)}`
     })
     setPending(undefined)
     if (error) {

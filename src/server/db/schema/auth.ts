@@ -69,7 +69,7 @@ export const verifications = pgTable(
   {
     id: varchar({ length: 255 }).primaryKey(),
     identifier: varchar({ length: 320 }).notNull(),
-    value: varchar({ length: 255 }).notNull(),
+    value: text().notNull(),
     expiresAt: timestamp().notNull(),
     ...timestamps
   },

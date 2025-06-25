@@ -16,12 +16,11 @@ export async function sendMagicLink({
 
   const updatedUrl = new URL(url)
   const isNewUser = !user
-  const prevCallbackURL = updatedUrl.searchParams.get("callbackURL")
   if (isNewUser) {
-    updatedUrl.searchParams.set("callbackURL", "/onboarding")
-    if (prevCallbackURL) {
-      updatedUrl.searchParams.set("afterOnboarding", prevCallbackURL)
-    }
+    const afterOnboarding = updatedUrl.searchParams.get("callbackURL") ?? "/"
+    const callbackURL = new URL("/onboarding", updatedUrl.origin)
+    callbackURL.searchParams.set("afterOnboarding", afterOnboarding)
+    updatedUrl.searchParams.set("callbackURL", callbackURL.toString())
   }
 
   await sendMail({
