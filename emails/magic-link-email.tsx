@@ -12,6 +12,7 @@ import {
   Tailwind
 } from "@react-email/components"
 
+// TODO: change  this to a real image URL
 const IMAGE_URL = "https://i.ibb.co/5XZnFk2m/fountain-pen-nib-3-svgrepo-com.png"
 
 const MagicLinkEmail = ({
